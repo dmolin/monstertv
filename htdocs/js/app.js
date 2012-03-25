@@ -13,7 +13,7 @@ function onYouTubePlayerReady( playerId ) {
 //try with 1Kvl31g77Z8
 $(document).ready( function(){
 
-	var idmatch = document.location.search.match(/video_id=(\w+)/),
+	var idmatch = document.location.search.match(/video_id=([^&]*)/),
 		videoId = idmatch && idmatch.length > 1 ? idmatch[1] : '',
 		player;
 
