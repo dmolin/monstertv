@@ -224,7 +224,9 @@ header.logo {
 			.video-length {
 				position: absolute;
 				bottom: 2px;
-				left: 88px;
+				left: 74px;
+				width: 35px;
+				text-align: right;
 				@include tag-text;
 			}
 		}
