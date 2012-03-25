@@ -70,13 +70,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /*----------------------------------
  * Typography & Mixins
  *----------------------------------*/
-/* line 65, ../../sass/screen.scss */
+/* line 38, ../../sass/_typography.scss */
 h1, h2, h3 {
   font-weight: bold;
   color: #0181bd;
 }
 
-/* line 70, ../../sass/screen.scss */
+/* line 43, ../../sass/_typography.scss */
 h1 {
   font-family: Arial, sans-serif;
   font-size: 26px;
@@ -85,7 +85,7 @@ h1 {
   margin-bottom: 0.2em;
 }
 
-/* line 74, ../../sass/screen.scss */
+/* line 47, ../../sass/_typography.scss */
 h2 {
   font-family: Arial, sans-serif;
   font-size: 26px;
@@ -96,7 +96,7 @@ h2 {
   font-weight: normal;
 }
 
-/* line 80, ../../sass/screen.scss */
+/* line 53, ../../sass/_typography.scss */
 h3 {
   font-family: Arial, sans-serif;
   font-size: 26px;
@@ -110,7 +110,7 @@ h3 {
 /*----------------------------------
  * General Properties
  *----------------------------------*/
-/* line 91, ../../sass/screen.scss */
+/* line 34, ../../sass/screen.scss */
 html {
   height: 100%;
   background-color: #83b6e1;
@@ -126,7 +126,7 @@ html {
   background-image: linear-gradient(top, #83b6e1 0%, #8cbbe3 16%, #99c3e6 32%, #dbeaf6 93%, #d9e9f6 100%);
 }
 
-/* line 96, ../../sass/screen.scss */
+/* line 39, ../../sass/screen.scss */
 body {
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -134,16 +134,17 @@ body {
   color: #266c0d;
   /* Structural markup is meant to be invisible to the eye */
 }
-/* line 102, ../../sass/screen.scss */
+/* line 45, ../../sass/screen.scss */
 body a, body a:visited, body a:active {
   color: #266c0d;
   text-decoration: none;
+  /*
+  &:hover {
+  	text-decoration: underline;
+  }
+  */
 }
-/* line 106, ../../sass/screen.scss */
-body a:hover, body a:visited:hover, body a:active:hover {
-  text-decoration: underline;
-}
-/* line 112, ../../sass/screen.scss */
+/* line 57, ../../sass/screen.scss */
 body .structure {
   display: block;
   text-indent: -9999px;
@@ -152,7 +153,7 @@ body .structure {
 /*----------------------------------
  * Header Section
  *----------------------------------*/
-/* line 122, ../../sass/screen.scss */
+/* line 66, ../../sass/screen.scss */
 header.logo {
   width: 953px;
   margin: 4px auto;
@@ -161,7 +162,7 @@ header.logo {
   z-index: 100;
   height: 90px;
 }
-/* line 130, ../../sass/screen.scss */
+/* line 74, ../../sass/screen.scss */
 header.logo a {
   position: absolute;
   background: transparent url('../images/logo.png?1332608112') left top no-repeat;
@@ -170,7 +171,7 @@ header.logo a {
   top: 0;
   left: 0;
 }
-/* line 138, ../../sass/screen.scss */
+/* line 82, ../../sass/screen.scss */
 header.logo a:hover {
   background: transparent url('../images/logo-hover.png?1332608143') left top no-repeat;
   width: 161px;
@@ -182,7 +183,7 @@ header.logo a:hover {
 /*----------------------------------
  * Player Section
  *----------------------------------*/
-/* line 154, ../../sass/screen.scss */
+/* line 98, ../../sass/screen.scss */
 #content {
   width: 953px;
   margin: 0 auto 0;
@@ -190,7 +191,7 @@ header.logo a:hover {
   position: relative;
   background: transparent url('../images/player-bg-top.png?1332609657') left top no-repeat;
 }
-/* line 165, ../../sass/screen.scss */
+/* line 106, ../../sass/screen.scss */
 #content .no-params {
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -207,7 +208,7 @@ header.logo a:hover {
   border-radius: 6px;
   display: none;
 }
-/* line 170, ../../sass/screen.scss */
+/* line 111, ../../sass/screen.scss */
 #content .no-js {
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -223,60 +224,60 @@ header.logo a:hover {
   -khtml-border-radius: 6px;
   border-radius: 6px;
 }
-/* line 174, ../../sass/screen.scss */
+/* line 115, ../../sass/screen.scss */
 #content .tv-content {
   margin-top: 20px;
   padding: 0 16px 20px;
   overflow: hidden;
   background: transparent url('../images/player-bg-middle.png?1332609745') left top repeat-y;
 }
-/* line 183, ../../sass/screen.scss */
+/* line 124, ../../sass/screen.scss */
 #content header h1 {
   width: 644px;
   text-align: right;
 }
-/* line 189, ../../sass/screen.scss */
+/* line 130, ../../sass/screen.scss */
 #content footer {
   background: transparent url('../images/player-bg-bottom.png?1332609686') left bottom no-repeat;
   width: 100%;
   height: 20px;
 }
 
-/* line 196, ../../sass/screen.scss */
+/* line 137, ../../sass/screen.scss */
 .player-wrapper {
   float: left;
   width: 644px;
 }
-/* line 200, ../../sass/screen.scss */
+/* line 141, ../../sass/screen.scss */
 .player-wrapper .player {
   width: 644px;
   height: 365px;
   border: 2px solid white;
 }
-/* line 208, ../../sass/screen.scss */
+/* line 149, ../../sass/screen.scss */
 .player-wrapper .description .published-on {
   font-size: 15.4px;
   line-height: 2em;
   color: #4a3773;
 }
-/* line 213, ../../sass/screen.scss */
+/* line 154, ../../sass/screen.scss */
 .player-wrapper .description .published-on strong {
   color: #ba098e;
   font-weight: bold;
 }
-/* line 219, ../../sass/screen.scss */
+/* line 160, ../../sass/screen.scss */
 .player-wrapper .description .additional-info {
   margin: 2px 0 5px 0;
 }
-/* line 224, ../../sass/screen.scss */
+/* line 165, ../../sass/screen.scss */
 .player-wrapper .additional-info {
   overflow: hidden;
 }
-/* line 227, ../../sass/screen.scss */
+/* line 168, ../../sass/screen.scss */
 .player-wrapper .additional-info span {
   float: left;
 }
-/* line 230, ../../sass/screen.scss */
+/* line 171, ../../sass/screen.scss */
 .player-wrapper .additional-info span.view-count {
   float: right;
   font-size: 15.4px;
@@ -286,21 +287,27 @@ header.logo a:hover {
 /*----------------------------------
  * Related content section
  *----------------------------------*/
-/* line 244, ../../sass/screen.scss */
+/* line 185, ../../sass/screen.scss */
 .related-container {
   float: right;
   width: 261px;
 }
-/* line 250, ../../sass/screen.scss */
+/* line 191, ../../sass/screen.scss */
 .related-container a.related {
   display: block;
   overflow: hidden;
   margin-bottom: 5px;
   padding: 4px;
+  cursor: pointer;
 }
-/* line 256, ../../sass/screen.scss */
-.related-container a.related:hover {
-  background-color: #fff;
+/* line 199, ../../sass/screen.scss */
+.related-container li {
+  display: block;
+}
+/* line 201, ../../sass/screen.scss */
+.related-container li:hover {
+  position: relative;
+  background-color: white;
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
   -o-border-radius: 8px;
@@ -308,23 +315,23 @@ header.logo a:hover {
   -khtml-border-radius: 8px;
   border-radius: 8px;
 }
-/* line 262, ../../sass/screen.scss */
+/* line 208, ../../sass/screen.scss */
 .related-container .related-video {
   position: relative;
 }
-/* line 267, ../../sass/screen.scss */
+/* line 213, ../../sass/screen.scss */
 .related-container .related-video .thumbnail {
   display: block;
   width: 116px;
   border: 2px solid white;
 }
-/* line 273, ../../sass/screen.scss */
+/* line 218, ../../sass/screen.scss */
 .related-container .related-video .thumbnail img {
   display: block;
   width: 116px;
   height: 63px;
 }
-/* line 279, ../../sass/screen.scss */
+/* line 224, ../../sass/screen.scss */
 .related-container .related-video .thumbnail .video-length {
   position: absolute;
   bottom: 2px;
@@ -335,23 +342,36 @@ header.logo a:hover {
   font-size: 11px;
   font-weight: bold;
 }
-/* line 287, ../../sass/screen.scss */
+/* line 232, ../../sass/screen.scss */
+.related-container .related-video .thumbnail-shadow {
+  display: block;
+  height: 4px;
+  background-color: gray;
+  width: 120px;
+  position: absolute;
+}
+/* line 240, ../../sass/screen.scss */
 .related-container .related-video .details {
   position: absolute;
   left: 130px;
   top: 2px;
   width: 123px;
 }
-/* line 294, ../../sass/screen.scss */
+/* line 248, ../../sass/screen.scss */
+.related-container .related-video .details h3:hover {
+  text-decoration: underline;
+  color: #0181bd;
+}
+/* line 254, ../../sass/screen.scss */
 .related-container .related-video .details .additional-info {
   clear: both;
   text-decoration: none;
 }
-/* line 298, ../../sass/screen.scss */
+/* line 258, ../../sass/screen.scss */
 .related-container .related-video .details .additional-info:hover {
   text-decoration: none;
 }
-/* line 304, ../../sass/screen.scss */
+/* line 264, ../../sass/screen.scss */
 .related-container .related-video h3 {
   word-wrap: break-word;
 }

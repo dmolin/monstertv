@@ -126,7 +126,8 @@ mindcandy.Player = (function(){
 								thumbnail: mindcandy.util.template( mindcandy.Player.templates.thumbnail, {
 									url: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].url,
 									width: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].width,
-									height: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].height
+									height: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].height,
+									title: feed.title.$t
 								}),
 								length: mindcandy.util.Time.fromValue( feed[ "media$group" ].yt$duration.seconds ),
 								viewCount: feed['yt$statistics'].viewCount
@@ -135,6 +136,13 @@ mindcandy.Player = (function(){
 
 					}
 				}
+
+				//set the event handler for the hover effect on the thumbnails
+				$('a.related', cfg.relatedEl).hover( function() {
+					$('.thumbnail-shadow', this).css('visibility', 'hidden');
+				}, function() {
+					$('.thumbnail-shadow', this).css('visibility', '');
+				} );
 			}
 
 			/*--------------------------------
@@ -163,6 +171,7 @@ mindcandy.Player = (function(){
 				cfg.height = $('div.player', cfg.containerSelector).css('height');
 			}
 
+			//embed the video
 			swfobject.embedSWF('http://www.youtube.com/v/' + cfg.videoId + '?version=3&enablejsapi=1&playerapiid=' + id,
 					_getPlayerMarkupId(), cfg.width, cfg.height, "9", null, null, params, attrs );
 
@@ -211,15 +220,16 @@ mindcandy.Player.templates = {
 		].join(''),
 
 	description: [
-		"<p class='published-on'>Posted on {{publishDate}} <strong>by {{publishUser}}</strong></p>",
 		"<div class='additional-info'><span>Total Length: {{length}}</span><span class='view-count'>{{viewCount}} Views</span></div>",
-		"<p class='description'>{{description}}</p>"
+		"<p class='description'>{{description}}</p>",
+		"<p class='published-on'>Posted on {{publishDate}} <strong>by {{publishUser}}</strong></p>"
 	].join(''),
 
 	related: [
-		"<a href='?video_id={{url}}' class='related'>",
+		"<a href='?video_id={{url}}' class='related' alt='{{title}}'>",
 		"<article class='related-video'>",
 			"<span class='thumbnail'>{{thumbnail}}<span class='video-length'>{{length}}</span></span>",
+			"<span class='thumbnail-shadow'></span>",
 			"<span class='details'>",
 				"<h3>{{title}}</h3>",
 				"<div class='additional-info'><span class='view-count'>{{viewCount}} Views</span></div>",
@@ -229,7 +239,7 @@ mindcandy.Player.templates = {
 	].join(''),
 
 	thumbnail: [
-		'<img src="{{url}}" alt="Default Thumbnail" />'
+		'<img src="{{url}}" alt="{{title}}" />'
 	].join('')
 
 };

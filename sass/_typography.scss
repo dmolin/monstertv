@@ -1,0 +1,57 @@
+@mixin style-message {
+	font-family: $common-font;
+	font-size: $font-size-normal;
+	text-align: center;
+	line-height: 1.2em;
+
+	background-color: darken($main-bg, 30);
+	color: white;
+	padding: 10px;
+	@include border-radius(6px);
+}
+
+@mixin main-title {
+	font-family: $common-font;
+	font-size: $font-size-big;
+	font-weight: bold;
+	line-height: 1.5em;
+	margin-bottom: 0.2em;
+}
+
+@mixin tag-text {
+	background-color: #000;
+	padding: 2px 4px;
+	color: #ddd;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+@mixin bg-gradient {
+	// needs latest Compass, add '@import "compass"' to your scss
+	background-color: #83b6e1; // Old browsers
+	@include filter-gradient(#83b6e1, #d9e9f6, vertical); // IE6-8
+	// IE9 SVG, needs conditional override of 'filter' to 'none'
+	$experimental-support-for-svg: true;
+	@include background-image(linear-gradient(top,  #83b6e1 0%,#8cbbe3 16%,#99c3e6 32%,#dbeaf6 93%,#d9e9f6 100%));
+}
+
+h1,h2,h3 {
+	font-weight: bold;
+	color: $title-color;
+}
+
+h1 {
+	@include main-title;
+}
+
+h2 {
+	@include main-title;
+	font-size: $font-size-medium;
+	font-weight: normal;
+}
+
+h3 {
+	@include main-title;
+	font-size: $font-size-normal;
+	color: #52427b;
+}
