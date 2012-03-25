@@ -1,0 +1,6 @@
+Step 3 Timeline (tot: 4h + 1h for browser compatibility issues. minimum scope: 2.5h )
+	2h for first slicing and implementing the general layout.
+	1h refining the layout
+	1h finishing touches and font size fixes
+	extra (browser compatibility):
+	1h fixing a glitch on IE7 for hover behavior on the related videos
