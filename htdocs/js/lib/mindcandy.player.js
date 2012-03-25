@@ -79,7 +79,7 @@ mindcandy.Player = (function(){
 			}
 
 			function _onInfo( data ) {
-				console.log( data.entry );
+				//console.log( data.entry );
 				meta = data.entry;
 
 				//set the header
@@ -99,7 +99,7 @@ mindcandy.Player = (function(){
 			* This function gets called when the feed for related video is ready
 			*/
 			function _onRelated( data ){
-				console.log( data.feed );
+				//console.log( data.feed );
 
 				var feed,
 					idx, //used in the for loop. declaring here for coherency with hoisting behavior
