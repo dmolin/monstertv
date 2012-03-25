@@ -122,8 +122,9 @@ header.logo {
 
 	header {
 		h1 {
-			width: $video-width;
+			width: $video-width - 124px;
 			text-align: right;
+			margin-left: 124px;
 		}
 	}
 

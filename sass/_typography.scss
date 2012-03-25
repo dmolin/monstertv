@@ -4,8 +4,7 @@
 	text-align: center;
 	line-height: 1.2em;
 
-	background-color: darken($main-bg, 30);
-	color: white;
+	color: #0181bd;
 	padding: 10px;
 	@include border-radius(6px);
 }
