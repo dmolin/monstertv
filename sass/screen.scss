@@ -10,11 +10,20 @@ $video-player-width: 900px;
 $video-width: 550px;
 $video-height: 350px;
 $common-font: Arial, sans-serif;
+$font-size-small: 10px;
+$font-size-normal: 12px;
+$font-size-medium: 16px;
+$font-size-big: 21px;
 $main-bg: #eee;
+$main-color: #000;
+
+/*----------------------------------
+ * Typography
+ *----------------------------------*/
 
 @mixin style-message {
 	font-family: $common-font;
-	font-size: 12px;
+	font-size: $font-size-normal;
 	text-align: center;
 	line-height: 1.2em;
 
@@ -24,9 +33,41 @@ $main-bg: #eee;
 	@include border-radius(6px);
 }
 
+@mixin main-title {
+	font-family: $common-font;
+	font-size: $font-size-big;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+}
+
+@mixin tag-text {
+	background-color: #000;
+	padding: 2px 4px;
+	color: #ddd;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+h1,h2,h3 {
+	font-weight: bold;
+}
+
+h1 {
+	height: 2em;
+	line-height: 2em;
+	@include main-title;
+}
+
+h2 {
+	@include main-title;
+	font-size: $font-size-medium;
+}
+
+
 body {
 	font-family: $common-font;
-	font-size: 16px;
+	font-size: $font-size-normal;
+	line-height: 1.3em;
 
 	a, a:visited, a:active {
 		color: #333;
@@ -38,15 +79,22 @@ body {
 	}
 }
 
+
+/*----------------------------------
+ * Player Section
+ *----------------------------------*/
+
 #video-player {
 	width: $video-player-width;
 	margin: 20px auto;
 	overflow: hidden;
-}
 
-#player-container {
+	background-color: darken($main-bg, 8);
+	padding: 20px;
+	@include border-radius(12px);
 
-	float: left;
+	header {
+	}
 
 	.no-params {
 		@include style-message;
@@ -57,30 +105,122 @@ body {
 		@include style-message;
 	}
 
+}
+
+.player-container {
+
+	float: left;
+
 	.player-wrapper {
 		width: $video-width;
-	}
 
-	div.player {
-		width: $video-width;
-		height: $video-height;
-	}
+		.player {
+			width: $video-width;
+			height: $video-height;
+		}
 
-	.additional-info {
-		overflow: hidden;
+		.description {
 
-		span {
-			float:left;
+			.published-on {
+				line-height: 2em;
+				color: lighten($main-color, 30);
 
-			&.view-count {
-				float:right;
+				em {
+					color: #1C62B9;
+				}
+			}
+
+			.additional-info {
+				margin: 2px 0 5px 0;
 			}
 		}
+
+		.additional-info {
+			overflow: hidden;
+
+			span {
+				float:left;
+
+				&.view-count {
+					float:right;
+				}
+			}
+
+		}
+	}
+
+}
+
+/*----------------------------------
+ * Related content section
+ *----------------------------------*/
+
+.related-container {
+	$related-width: $video-player-width - $video-width - 30px;
+
+	float: right;
+	width: $related-width;
+
+	.related-video {
+		position: relative;
+		margin-bottom: 5px;
+		$image-width: 120px;
+
+		a {
+			display: block;
+			overflow: hidden;
+
+			&:hover {
+				background-color: #fff;
+				@include border-radius(8px);
+			}
+		}
+
+		.thumbnail {
+			display: block;
+			position: relative;
+			width: $image-width;
+
+			img {
+				width: $image-width;
+			}
+
+			.video-length {
+				position: absolute;
+				bottom: 4px;
+				right: 0;
+				@include tag-text;
+			}
+		}
+
+		.details {
+			position: absolute;
+			left: $image-width + 5px;
+			top: 2px;
+			width: $related-width - 130px;
+
+			.additional-info {
+				clear: both;
+			}
+		}
+
+		h3 {
+			word-wrap: break-word;
+		}
+
 
 	}
 }
 
-#related-container {
-	float: right;
-	width: $video-player-width - $video-width - 30px;
+
+/*-------------------------------------
+ * IE Browser overrides
+ *-------------------------------------*/
+body.ie7 .related-container {
+	.related-video {
+		a {
+			display: inline;
+			zoom:1;
+		}
+	}
 }

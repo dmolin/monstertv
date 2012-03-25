@@ -67,34 +67,68 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 27, ../../sass/screen.scss */
-body {
+/*----------------------------------
+ * Typography
+ *----------------------------------*/
+/* line 51, ../../sass/screen.scss */
+h1, h2, h3 {
+  font-weight: bold;
+}
+
+/* line 55, ../../sass/screen.scss */
+h1 {
+  height: 2em;
+  line-height: 2em;
   font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+/* line 61, ../../sass/screen.scss */
+h2 {
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
   font-size: 16px;
 }
-/* line 31, ../../sass/screen.scss */
+
+/* line 67, ../../sass/screen.scss */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.3em;
+}
+/* line 72, ../../sass/screen.scss */
 body a, body a:visited, body a:active {
   color: #333;
   text-decoration: none;
 }
-/* line 35, ../../sass/screen.scss */
+/* line 76, ../../sass/screen.scss */
 body a:hover, body a:visited:hover, body a:active:hover {
   text-decoration: underline;
 }
 
-/* line 41, ../../sass/screen.scss */
+/*----------------------------------
+ * Player Section
+ *----------------------------------*/
+/* line 87, ../../sass/screen.scss */
 #video-player {
   width: 900px;
   margin: 20px auto;
   overflow: hidden;
+  background-color: #dadada;
+  padding: 20px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -o-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -khtml-border-radius: 12px;
+  border-radius: 12px;
 }
-
-/* line 47, ../../sass/screen.scss */
-#player-container {
-  float: left;
-}
-/* line 51, ../../sass/screen.scss */
-#player-container .no-params {
+/* line 99, ../../sass/screen.scss */
+#video-player .no-params {
   font-family: Arial, sans-serif;
   font-size: 12px;
   text-align: center;
@@ -110,8 +144,8 @@ body a:hover, body a:visited:hover, body a:active:hover {
   border-radius: 6px;
   display: none;
 }
-/* line 56, ../../sass/screen.scss */
-#player-container .no-js {
+/* line 104, ../../sass/screen.scss */
+#video-player .no-js {
   font-family: Arial, sans-serif;
   font-size: 12px;
   text-align: center;
@@ -126,30 +160,116 @@ body a:hover, body a:visited:hover, body a:active:hover {
   -khtml-border-radius: 6px;
   border-radius: 6px;
 }
-/* line 60, ../../sass/screen.scss */
-#player-container .player-wrapper {
+
+/* line 110, ../../sass/screen.scss */
+.player-container {
+  float: left;
+}
+/* line 114, ../../sass/screen.scss */
+.player-container .player-wrapper {
   width: 550px;
 }
-/* line 64, ../../sass/screen.scss */
-#player-container div.player {
+/* line 117, ../../sass/screen.scss */
+.player-container .player-wrapper .player {
   width: 550px;
   height: 350px;
 }
-/* line 69, ../../sass/screen.scss */
-#player-container .additional-info {
+/* line 124, ../../sass/screen.scss */
+.player-container .player-wrapper .description .published-on {
+  line-height: 2em;
+  color: #4d4d4d;
+}
+/* line 128, ../../sass/screen.scss */
+.player-container .player-wrapper .description .published-on em {
+  color: #1C62B9;
+}
+/* line 133, ../../sass/screen.scss */
+.player-container .player-wrapper .description .additional-info {
+  margin: 2px 0 5px 0;
+}
+/* line 138, ../../sass/screen.scss */
+.player-container .player-wrapper .additional-info {
   overflow: hidden;
 }
-/* line 72, ../../sass/screen.scss */
-#player-container .additional-info span {
+/* line 141, ../../sass/screen.scss */
+.player-container .player-wrapper .additional-info span {
   float: left;
 }
-/* line 75, ../../sass/screen.scss */
-#player-container .additional-info span.view-count {
+/* line 144, ../../sass/screen.scss */
+.player-container .player-wrapper .additional-info span.view-count {
   float: right;
 }
 
-/* line 83, ../../sass/screen.scss */
-#related-container {
+/*----------------------------------
+ * Related content section
+ *----------------------------------*/
+/* line 158, ../../sass/screen.scss */
+.related-container {
   float: right;
   width: 320px;
+}
+/* line 164, ../../sass/screen.scss */
+.related-container .related-video {
+  position: relative;
+  margin-bottom: 5px;
+}
+/* line 169, ../../sass/screen.scss */
+.related-container .related-video a {
+  display: block;
+  overflow: hidden;
+}
+/* line 173, ../../sass/screen.scss */
+.related-container .related-video a:hover {
+  background-color: #fff;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+/* line 179, ../../sass/screen.scss */
+.related-container .related-video .thumbnail {
+  display: block;
+  position: relative;
+  width: 120px;
+}
+/* line 184, ../../sass/screen.scss */
+.related-container .related-video .thumbnail img {
+  width: 120px;
+}
+/* line 188, ../../sass/screen.scss */
+.related-container .related-video .thumbnail .video-length {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  background-color: #000;
+  padding: 2px 4px;
+  color: #ddd;
+  font-size: 11px;
+  font-weight: bold;
+}
+/* line 196, ../../sass/screen.scss */
+.related-container .related-video .details {
+  position: absolute;
+  left: 125px;
+  top: 2px;
+  width: 190px;
+}
+/* line 202, ../../sass/screen.scss */
+.related-container .related-video .details .additional-info {
+  clear: both;
+}
+/* line 207, ../../sass/screen.scss */
+.related-container .related-video h3 {
+  word-wrap: break-word;
+}
+
+/*-------------------------------------
+ * IE Browser overrides
+ *-------------------------------------*/
+/* line 221, ../../sass/screen.scss */
+body.ie7 .related-container .related-video a {
+  display: inline;
+  zoom: 1;
 }

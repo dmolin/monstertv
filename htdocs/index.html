@@ -4,31 +4,46 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/screen.css" >
-	<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+ <!--[if IE]>
+ 	<link href="css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" >
+<![endif]-->
+<!--[if lte IE 7]>
+ 	<link href="css/ie7.css" media="screen, projection" rel="stylesheet" type="text/css" >
+<![endif]-->
+  	<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
-<body>
+<!--[if lt IE 7]>
+<body class='ie ie6'>
+<![endif]-->
+<!--[if lt IE 8]>
+<body class='ie ie7'>
+<![endif]-->
+<!--[if lt IE 9]>
+<body class='ie ie8'>
+<![endif]-->
+<!--[if gte IE 9]>
+<body class='ie ie9'>
+<![endif]-->
+<!--[if !IE]><!--> <body class='cool'> <!--<![endif]-->
 
 	<section id='video-player'>
-		<section id='player-container' >
-	        <div class="no-params">
-	            <p>You have to specify a video_id param in the URL query string in order to load a video</p>
-	            <p>like so: <a href="?video_id=1Kvl31g77Z8">{{url}}?video_id=1Kvl31g77Z8</a></p>
-	        </div>
-	        <div class='no-js'>
-	        	<p>Sorry, this page cannot be accessed without Javascript. Please, turn on Javascript support in your browser first</p>
-	        </div>
-		</section>
-
-		<aside id='related-container'>
-		</aside>
+        <div class="no-params">
+            <p>You have to specify a video_id param in the URL query string in order to load a video</p>
+            <p>like so: <a href="?video_id=1Kvl31g77Z8">{{url}}?video_id=1Kvl31g77Z8</a></p>
+        </div>
+        <div class='no-js'>
+        	<p>Sorry, this page cannot be accessed without Javascript. Please, turn on Javascript support in your browser first</p>
+        </div>
 	</section>
 
+
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<!--<script src="js/lib/date.js"></script>-->
 <script src="js/lib/tash-0.0.1.js"></script>
 <script src="js/lib/mindcandy.util.js"></script>
 <script src="js/lib/mindcandy.player.js"></script>

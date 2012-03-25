@@ -20,8 +20,8 @@ mindcandy.Player = (function(){
 				params = { allowScriptAccess: 'always' },
 				attrs = { },
 				id = next(),
-				meta,
-				el; //jQuery element wrapping the player
+				playerEl,	//element for the player object
+				meta;
 
 			/*--------------------------------
 			* Private functions
@@ -37,13 +37,23 @@ mindcandy.Player = (function(){
 
 			function getRelatedVideos() {
 				var rel = document.createElement('script');
+
+				//create the container for the related videos
+				cfg.relatedEl = $("<aside class='related-container'></aside>");
+				$(cfg.el).append( cfg.relatedEl );
+
+				//include the script for loading the feeds
 				$(rel).attr('src',
 							'https://gdata.youtube.com/feeds/api/videos/' +
 							cfg.videoId +
 							'/related?v=2&alt=json-in-script&callback=mindcandy.Player.all[' + id + ']._api.onRelated' );
 				$(document.body).append( rel );
+
 			}
 
+			function setHeader( meta ) {
+				$( cfg.el ).prepend( mindcandy.util.template( mindcandy.Player.templates.header, { title: meta.title.$t } ) );
+			}
 
 			/*--------------------------------
 			* Exposed privieged API
@@ -58,28 +68,27 @@ mindcandy.Player = (function(){
 			}
 
 			function _onReady() {
-				el = $('#' + _getPlayerMarkupId(), cfg.containerSelector );
+				playerEl = $('#' + _getPlayerMarkupId(), cfg.el );
+
 				//get the data describing this video
 				getVideoMeta();
 
 				//get the information for the related content
-				if( cfg.relatedSelector ) {
-					getRelatedVideos();
-				}
+				getRelatedVideos();
 			}
 
 			function _onInfo( data ) {
 				console.log( data.entry );
 				meta = data.entry;
 
+				setHeader( meta );
+
 				//display meta
-				$('header', cfg.containerSelector ).empty().append( '<h1>' + meta.title.$t + '</h1>' );
-				//$('.description', cfg.containerSelector).empty().append( '<p>' + meta.media$group.media$description.$t + '</p>' );
-				$('.description', cfg.containerSelector ).empty().append( mindcandy.util.template( mindcandy.Player.templates.description, {
-						publishDate: meta.published.$t,
+				$('.description', cfg.el ).empty().append( mindcandy.util.template( mindcandy.Player.templates.description, {
+						publishDate: new Date(meta.published.$t).toDateString(),
 						publishUser: meta.author[0].name.$t,
 						description: meta.media$group.media$description.$t,
-						length: mindcandy.util.Time.fromValue( el.get(0).getDuration() ),
+						length: mindcandy.util.Time.fromValue( playerEl.get(0).getDuration() ),
 						viewCount: meta.yt$statistics.viewCount
 					} ) );
 			}
@@ -90,18 +99,31 @@ mindcandy.Player = (function(){
 			function _onRelated( data ){
 				console.log( data.feed );
 
-				var feed, idx; //used in the for loop. declaring here for coherency with hoisting behavior
+				var feed,
+					idx, //used in the for loop. declaring here for coherency with hoisting behavior
+					iterations = (data.feed.entry.length >= 5 ? 5 : data.feed.entry.length); //default is to show the last 5 entries
 
-				$(cfg.relatedSelector).empty();
+				cfg.relatedEl.empty();
 
-				//for each entry, generate the markup for the related video
-				for( idx in data.feed.entry ) {
+				//add title
+				cfg.relatedEl.append( '<header><H2>' + data.feed.title.$t + '</H2></header>' );
+
+				//for each entry, generate the markup for the related video. only the last 5 entries..
+				for( idx = 0; idx < iterations; idx++ ) {
 					if( data.feed.entry.hasOwnProperty( idx ) ) {
 						feed = data.feed.entry[idx];
-						console.log( "adding " + feed.title.$t );
-						$(cfg.relatedSelector).append(
+						//console.log( "adding " + feed.title.$t );
+						cfg.relatedEl.append(
 							mindcandy.util.template( mindcandy.Player.templates.related, {
-								title: feed.title.$t
+								url: feed['media$group']['yt$videoid'].$t,
+								title: feed.title.$t,
+								thumbnail: mindcandy.util.template( mindcandy.Player.templates.thumbnail, {
+									url: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].url,
+									width: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].width,
+									height: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].height
+								}),
+								length: mindcandy.util.Time.fromValue( feed[ "media$group" ].yt$duration.seconds ),
+								viewCount: feed['yt$statistics'].viewCount
 							} ) );
 
 					}
@@ -112,18 +134,19 @@ mindcandy.Player = (function(){
 			* Main logic
 			*--------------------------------*/
 
-			if( !cfg.videoId || !cfg.containerSelector ) {
+			if( !cfg.videoId || !cfg.el ) {
 				throw mindcandy.errors.create( mindcandy.errors.ENOARGS );
 			}
 
-			//remove the no-flash message in the container
-			$('> .no-params', cfg.containerSelector ).remove();
+			$('> .no-params', cfg.el ).remove();
+			$('> .no-js', cfg.el ).remove();
 
 			//create the player element into the container markup
-			$(cfg.containerSelector).append( mindcandy.util.template( mindcandy.Player.templates.player, { playerId: _getPlayerMarkupId() } ) );
+			$(cfg.el).append( mindcandy.util.template( mindcandy.Player.templates.player, { playerId: _getPlayerMarkupId() } ) );
 
 			attrs = {
-				id: _getPlayerMarkupId()
+				id: _getPlayerMarkupId(),
+				'class': 'player'
 			};
 
 			//if there are no dimensions, infer them from the container markup element
@@ -163,9 +186,11 @@ mindcandy.Player = (function(){
 
 //templates used when rendering the player. This could be provided by a REST API
 mindcandy.Player.templates = {
+	header: ["<header><H1>{{title}}</H1></header>"].join(''),
+
 	player: [
+		"<section class='player-container'>",
 		"<article id='{{playerId}}-wrapper' class='player-wrapper' >",
-		"<header></header>",
 		"<div id='{{playerId}}' class='player'>",
 			"<div class='no-flash'>",
 				"<p>Download and Install Flash Player</p>",
@@ -175,17 +200,28 @@ mindcandy.Player.templates = {
 			"</div>",
 		"</div>",
 		"<div class='description'></div>",
-		"</article>" ].join(''),
+		"</article>",
+		"</section>" ].join(''),
 
 	description: [
-		"<div class='published-on'><span>Published on {{publishDate}} by <em>{{publishUser}}</em></span></div>",
-		"<div class='additional-info'><span>total length: {{length}}</span><span class='view-count'>{{viewCount}}</span></div>",
+		"<p class='published-on'>Published on {{publishDate}} by <em>{{publishUser}}</em></p>",
+		"<div class='additional-info'><span>total length: {{length}}</span><span class='view-count'>views: {{viewCount}}</span></div>",
 		"<p class='description'>{{description}}</p>"
 	].join(''),
 
 	related: [
 		"<article class='related-video'>",
-			"<h1>{{title}}</h1>",
+			"<a href='?video_id={{url}}' >",
+			"<span class='thumbnail'>{{thumbnail}}<span class='video-length'>{{length}}</span></span>",
+			"<span class='details'>",
+				"<h3>{{title}}</h3>",
+				"<div class='additional-info'><span class='view-count'>{{viewCount}} views</span></div>",
+			"</span>",
+			"</a>",
 		"</article>"
+	].join(''),
+
+	thumbnail: [
+		'<img src="{{url}}" alt="Default Thumbnail" class="thumbnail" />'
 	].join('')
 };
