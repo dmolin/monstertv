@@ -73,14 +73,14 @@ header.logo {
 
 	a {
 		position: absolute;
-		background: transparent image-url('logo.png') left top no-repeat;
+		background: transparent image-url('sprite-logo.png') left top no-repeat;
 		width: 157px;
 		height: 130px;
 		top: 0;
 		left:0;
 
 		&:hover {
-			background: transparent image-url('logo-hover.png') left top no-repeat;
+			background: transparent image-url('sprite-logo.png') left -150px no-repeat;
 			width: 161px;
 			height: 134px;
 			top: -2px;
@@ -101,7 +101,7 @@ header.logo {
 	overflow: hidden;
 	position: relative;
 
-	background: transparent image-url('player-bg-top.png') left top no-repeat;
+	background: transparent image-url('sprite-player.png') left top no-repeat;
 
 	.no-params {
 		@include style-message;
@@ -116,7 +116,7 @@ header.logo {
 		margin-top: 20px;
 		padding: 0 16px 20px;
 		overflow: hidden;
-		background: transparent image-url('player-bg-middle.png') left top repeat-y;
+		background: transparent image-url('sprite-player.png') -1906px top repeat-y;
 
 	}
 
@@ -128,7 +128,7 @@ header.logo {
 	}
 
 	footer {
-		background: transparent image-url('player-bg-bottom.png') left bottom no-repeat;
+		background: transparent image-url('sprite-player.png') -953px top no-repeat;
 		width: 100%;
 		height: 20px;
 	}
