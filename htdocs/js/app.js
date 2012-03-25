@@ -21,7 +21,7 @@ $(document).ready( function(){
 	$( '.no-js').hide();
 
 	//if no video_id is provided, tell the user how to use this page...
-	if( !videoId ) {
+	if( !videoId.length ) {
 		$('.no-params').html( mindcandy.util.template( $('.no-params').html(), { url: document.location.href } ) );
 		$('.no-params' ).fadeIn();
 	}
@@ -29,8 +29,9 @@ $(document).ready( function(){
 	try {
 		//create a player
 		player = mindcandy.Player.create( {
-			containerSelector:'#player-container',
-			relatedSelector:'#related-container', videoId:videoId } );
+			el:$('#content .tv-content'),
+			videoId:videoId
+		} );
 	} catch( error ) {
 		console.log( error );
 	}

@@ -5,20 +5,24 @@
 
 @import "compass/reset";
 @import "compass/css3/border-radius";
+@import "compass/css3/gradient";
 
-$video-player-width: 900px;
-$video-width: 550px;
-$video-height: 350px;
+$video-player-width: 953px;
+$video-width: 644px;
+$video-height: 365px;
+$video-paddings: 16px;
 $common-font: Arial, sans-serif;
 $font-size-small: 10px;
-$font-size-normal: 12px;
-$font-size-medium: 16px;
-$font-size-big: 21px;
+$font-size-normal: 14px;
+$font-size-medium: 20px;
+$font-size-big: 26px;
 $main-bg: #eee;
 $main-color: #000;
+$title-color: #0181bd;
+$post-color: #266c0d;
 
 /*----------------------------------
- * Typography
+ * Typography & Mixins
  *----------------------------------*/
 
 @mixin style-message {
@@ -37,7 +41,8 @@ $main-color: #000;
 	font-family: $common-font;
 	font-size: $font-size-big;
 	font-weight: bold;
-	margin-bottom: 0.5em;
+	line-height: 1.5em;
+	margin-bottom: 0.2em;
 }
 
 @mixin tag-text {
@@ -48,53 +53,114 @@ $main-color: #000;
 	font-weight: bold;
 }
 
+@mixin bg-gradient {
+	// needs latest Compass, add '@import "compass"' to your scss
+	background-color: #83b6e1; // Old browsers
+	@include filter-gradient(#83b6e1, #d9e9f6, vertical); // IE6-8
+	// IE9 SVG, needs conditional override of 'filter' to 'none'
+	$experimental-support-for-svg: true;
+	@include background-image(linear-gradient(top,  #83b6e1 0%,#8cbbe3 16%,#99c3e6 32%,#dbeaf6 93%,#d9e9f6 100%));
+}
+
 h1,h2,h3 {
 	font-weight: bold;
+	color: $title-color;
 }
 
 h1 {
-	height: 2em;
-	line-height: 2em;
 	@include main-title;
 }
 
 h2 {
 	@include main-title;
 	font-size: $font-size-medium;
+	font-weight: normal;
 }
 
+h3 {
+	@include main-title;
+	font-size: $font-size-normal;
+	color: #52427b;
+}
+
+
+/*----------------------------------
+ * General Properties
+ *----------------------------------*/
+
+html {
+	height: 100%;
+	@include bg-gradient;
+}
 
 body {
 	font-family: $common-font;
 	font-size: $font-size-normal;
 	line-height: 1.3em;
+	color: $post-color;
 
 	a, a:visited, a:active {
-		color: #333;
+		color: $post-color;
 		text-decoration: none;
 
 		&:hover {
 			text-decoration: underline;
 		}
 	}
+
+	/* Structural markup is meant to be invisible to the eye */
+	.structure {
+		display: block;
+		text-indent : -9999px;
+	}
 }
+
+
+/*----------------------------------
+ * Header Section
+ *----------------------------------*/
+header.logo {
+	width: $video-player-width;
+	margin: 4px auto;
+	position: relative;
+	overflow: visible;
+	z-index: 100;
+	height: 90px;
+
+	a {
+		position: absolute;
+		background: transparent image-url('logo.png') left top no-repeat;
+		width: 157px;
+		height: 130px;
+		top: 0;
+		left:0;
+
+		&:hover {
+			background: transparent image-url('logo-hover.png') left top no-repeat;
+			width: 161px;
+			height: 134px;
+			top: -2px;
+			left:-2px;
+		}
+	}
+}
+
 
 
 /*----------------------------------
  * Player Section
  *----------------------------------*/
 
-#video-player {
+#content {
 	width: $video-player-width;
-	margin: 20px auto;
+	margin: 0 auto 0;
 	overflow: hidden;
+	position: relative;
 
-	background-color: darken($main-bg, 8);
-	padding: 20px;
-	@include border-radius(12px);
-
-	header {
-	}
+	//background-color: darken($main-bg, 8);
+	//padding: 20px;
+	//@include border-radius(12px);
+	background: transparent image-url('player-bg-top.png') left top no-repeat;
 
 	.no-params {
 		@include style-message;
@@ -105,50 +171,70 @@ body {
 		@include style-message;
 	}
 
+	.tv-content {
+		margin-top: 20px;
+		padding: 0 16px 20px;
+		overflow: hidden;
+		background: transparent image-url('player-bg-middle.png') left top repeat-y;
+
+	}
+
+	header {
+		h1 {
+			width: $video-width;
+			text-align: right;
+		}
+	}
+
+	footer {
+		background: transparent image-url('player-bg-bottom.png') left bottom no-repeat;
+		width: 100%;
+		height: 20px;
+	}
 }
 
-.player-container {
-
+.player-wrapper {
 	float: left;
+	width: $video-width;
 
-	.player-wrapper {
+	.player {
 		width: $video-width;
+		height: $video-height;
+		border: 2px solid white;
+	}
 
-		.player {
-			width: $video-width;
-			height: $video-height;
-		}
+	.description {
 
-		.description {
+		.published-on {
+			font-size: $font-size-normal * 1.1;
+			line-height: 2em;
+			color: #4a3773;
 
-			.published-on {
-				line-height: 2em;
-				color: lighten($main-color, 30);
-
-				em {
-					color: #1C62B9;
-				}
-			}
-
-			.additional-info {
-				margin: 2px 0 5px 0;
+			strong {
+				color: #ba098e;
+				font-weight: bold;
 			}
 		}
 
 		.additional-info {
-			overflow: hidden;
-
-			span {
-				float:left;
-
-				&.view-count {
-					float:right;
-				}
-			}
-
+			margin: 2px 0 5px 0;
 		}
 	}
 
+	.additional-info {
+		overflow: hidden;
+
+		span {
+			float:left;
+
+			&.view-count {
+				float:right;
+				font-size: $font-size-normal * 1.1;
+				font-weight: bold;
+			}
+		}
+
+	}
 }
 
 /*----------------------------------
@@ -156,51 +242,62 @@ body {
  *----------------------------------*/
 
 .related-container {
-	$related-width: $video-player-width - $video-width - 30px;
+	$related-width: $video-player-width - $video-width - ($video-paddings*3);
 
 	float: right;
 	width: $related-width;
 
+	a.related {
+		display: block;
+		overflow: hidden;
+		margin-bottom: 5px;
+		padding: 4px;
+
+		&:hover {
+			background-color: #fff;
+			@include border-radius(8px);
+		}
+	}
+
 	.related-video {
 		position: relative;
-		margin-bottom: 5px;
-		$image-width: 120px;
-
-		a {
-			display: block;
-			overflow: hidden;
-
-			&:hover {
-				background-color: #fff;
-				@include border-radius(8px);
-			}
-		}
+		$image-width: 116px;
+		$image-height: 63px;
 
 		.thumbnail {
 			display: block;
-			position: relative;
 			width: $image-width;
+			border: 2px solid white;
+			//position: relative; //not with IE :(
 
 			img {
+				display: block;
 				width: $image-width;
+				height: $image-height;
 			}
 
 			.video-length {
 				position: absolute;
-				bottom: 4px;
-				right: 0;
+				bottom: 2px;
+				left: 88px;
 				@include tag-text;
 			}
 		}
 
 		.details {
 			position: absolute;
-			left: $image-width + 5px;
+			left: $image-width + 10px + 4px;
 			top: 2px;
-			width: $related-width - 130px;
+			//width = related - image - spaces - padding for anchor - padding for borders
+			width: $related-width - $image-width - 10px - 8px - 4px;
 
 			.additional-info {
 				clear: both;
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: none;
+				}
 			}
 		}
 
@@ -209,18 +306,5 @@ body {
 		}
 
 
-	}
-}
-
-
-/*-------------------------------------
- * IE Browser overrides
- *-------------------------------------*/
-body.ie7 .related-container {
-	.related-video {
-		a {
-			display: inline;
-			zoom:1;
-		}
 	}
 }

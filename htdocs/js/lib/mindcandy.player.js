@@ -51,10 +51,6 @@ mindcandy.Player = (function(){
 
 			}
 
-			function setHeader( meta ) {
-				$( cfg.el ).prepend( mindcandy.util.template( mindcandy.Player.templates.header, { title: meta.title.$t } ) );
-			}
-
 			/*--------------------------------
 			* Exposed privieged API
 			*--------------------------------*/
@@ -68,6 +64,11 @@ mindcandy.Player = (function(){
 			}
 
 			function _onReady() {
+				if( playerEl ) {
+					//already inited
+					return;
+				}
+
 				playerEl = $('#' + _getPlayerMarkupId(), cfg.el );
 
 				//get the data describing this video
@@ -81,11 +82,12 @@ mindcandy.Player = (function(){
 				console.log( data.entry );
 				meta = data.entry;
 
-				setHeader( meta );
+				//set the header
+				$( '> header', cfg.el ).replaceWith( mindcandy.util.template( mindcandy.Player.templates.header, { title: meta.title.$t } ) );
 
 				//display meta
 				$('.description', cfg.el ).empty().append( mindcandy.util.template( mindcandy.Player.templates.description, {
-						publishDate: new Date(meta.published.$t).toDateString(),
+						publishDate: moment(meta.published.$t.split('T')[0]).format('dddd MMMM Do, YYYY'),
 						publishUser: meta.author[0].name.$t,
 						description: meta.media$group.media$description.$t,
 						length: mindcandy.util.Time.fromValue( playerEl.get(0).getDuration() ),
@@ -101,22 +103,26 @@ mindcandy.Player = (function(){
 
 				var feed,
 					idx, //used in the for loop. declaring here for coherency with hoisting behavior
-					iterations = (data.feed.entry.length >= 5 ? 5 : data.feed.entry.length); //default is to show the last 5 entries
+					iterations = (data.feed.entry.length >= 5 ? 5 : data.feed.entry.length), //default is to show the last 5 entries
+					articlesContainer = $('<ul></ul>');
 
 				cfg.relatedEl.empty();
 
 				//add title
-				cfg.relatedEl.append( '<header><H2>' + data.feed.title.$t + '</H2></header>' );
+				//cfg.relatedEl.append( '<header><H2>' + data.feed.title.$t + '</H2></header>' );
+				cfg.relatedEl.append( '<header><H2>More Videos</H2></header>' );
+				cfg.relatedEl.append( articlesContainer );
 
 				//for each entry, generate the markup for the related video. only the last 5 entries..
 				for( idx = 0; idx < iterations; idx++ ) {
 					if( data.feed.entry.hasOwnProperty( idx ) ) {
 						feed = data.feed.entry[idx];
 						//console.log( "adding " + feed.title.$t );
-						cfg.relatedEl.append(
+						articlesContainer.append(
+							'<li>' +
 							mindcandy.util.template( mindcandy.Player.templates.related, {
 								url: feed['media$group']['yt$videoid'].$t,
-								title: feed.title.$t,
+								title: mindcandy.util.trimAt( feed.title.$t, 25 ),
 								thumbnail: mindcandy.util.template( mindcandy.Player.templates.thumbnail, {
 									url: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].url,
 									width: feed[ "media$group" ][ "media$thumbnail" ][ 0 ].width,
@@ -124,7 +130,8 @@ mindcandy.Player = (function(){
 								}),
 								length: mindcandy.util.Time.fromValue( feed[ "media$group" ].yt$duration.seconds ),
 								viewCount: feed['yt$statistics'].viewCount
-							} ) );
+							} ) +
+							'</li>' );
 
 					}
 				}
@@ -142,6 +149,7 @@ mindcandy.Player = (function(){
 			$('> .no-js', cfg.el ).remove();
 
 			//create the player element into the container markup
+			$(cfg.el).append( mindcandy.util.template( mindcandy.Player.templates.header, { title: '&nbsp;' } ) );
 			$(cfg.el).append( mindcandy.util.template( mindcandy.Player.templates.player, { playerId: _getPlayerMarkupId() } ) );
 
 			attrs = {
@@ -189,7 +197,6 @@ mindcandy.Player.templates = {
 	header: ["<header><H1>{{title}}</H1></header>"].join(''),
 
 	player: [
-		"<section class='player-container'>",
 		"<article id='{{playerId}}-wrapper' class='player-wrapper' >",
 		"<div id='{{playerId}}' class='player'>",
 			"<div class='no-flash'>",
@@ -200,28 +207,29 @@ mindcandy.Player.templates = {
 			"</div>",
 		"</div>",
 		"<div class='description'></div>",
-		"</article>",
-		"</section>" ].join(''),
+		"</article>"
+		].join(''),
 
 	description: [
-		"<p class='published-on'>Published on {{publishDate}} by <em>{{publishUser}}</em></p>",
-		"<div class='additional-info'><span>total length: {{length}}</span><span class='view-count'>views: {{viewCount}}</span></div>",
+		"<p class='published-on'>Posted on {{publishDate}} <strong>by {{publishUser}}</strong></p>",
+		"<div class='additional-info'><span>Total Length: {{length}}</span><span class='view-count'>{{viewCount}} Views</span></div>",
 		"<p class='description'>{{description}}</p>"
 	].join(''),
 
 	related: [
+		"<a href='?video_id={{url}}' class='related'>",
 		"<article class='related-video'>",
-			"<a href='?video_id={{url}}' >",
 			"<span class='thumbnail'>{{thumbnail}}<span class='video-length'>{{length}}</span></span>",
 			"<span class='details'>",
 				"<h3>{{title}}</h3>",
-				"<div class='additional-info'><span class='view-count'>{{viewCount}} views</span></div>",
+				"<div class='additional-info'><span class='view-count'>{{viewCount}} Views</span></div>",
 			"</span>",
-			"</a>",
-		"</article>"
+		"</article>",
+		"</a>"
 	].join(''),
 
 	thumbnail: [
-		'<img src="{{url}}" alt="Default Thumbnail" class="thumbnail" />'
+		'<img src="{{url}}" alt="Default Thumbnail" />'
 	].join('')
+
 };

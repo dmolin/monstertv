@@ -1,7 +1,8 @@
 # Require any additional compass plugins here.
 
 # Set this to the root of your project when deployed:
-http_path = "/"
+http_path = "/interviews/mindcandy/step3/"
+http_images_path = "../images"
 css_dir = "htdocs/css"
 sass_dir = "sass"
 images_dir = "htdocs/images"

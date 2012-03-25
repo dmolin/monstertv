@@ -8,14 +8,23 @@ mindcandy.util = {
 		template: function( tmpl, obj ) {
 			var i,
 				matches = tmpl.match(/\{\{(\w+)\}\}/g);
-			for( i = 0; i < matches.length; i++ ) {
-				var matched = matches[i];
-				if( matched.charAt(0) !== '{' ) {
-					return; //skip non matching elements
+			if( matches ) {
+				for( i = 0; i < matches.length; i++ ) {
+					var matched = matches[i];
+					if( matched.charAt(0) !== '{' ) {
+						return; //skip non matching elements
+					}
+					tmpl = tmpl.replace( matched, obj[matched.substr(2, matched.length-4)]||matched );
 				}
-				tmpl = tmpl.replace( matched, obj[matched.substr(2, matched.length-4)]||matched );
 			}
 			return tmpl;
+		},
+
+		trimAt: function( str, length ) {
+			if( str && str.length && str.length > length ) {
+				str = str.substr( 0, length-3 ) + '...';
+			}
+			return str;
 		}
 };
 
@@ -36,9 +45,9 @@ mindcandy.util.Time = {
 		outcome.mm = Math.floor( (secs % SECS_IN_HOUR) / SECS_IN_MIN );
 		outcome.ss = Math.ceil( (secs % SECS_IN_HOUR) % SECS_IN_MIN );
 		outcome.toString = function() {
-			return  (this.hh > 0 ? this.hh + 'h ' :'') +
-					(this.mm > 0 ? this.mm + 'm ' :'') +
-					this.ss + 's';
+			return  (this.hh > 0 ? this.hh + ':' :'') +
+					(this.mm > 0 ? this.mm + ':' :'0:') +
+					this.ss;
 		};
 
 		return outcome;

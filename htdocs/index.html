@@ -31,19 +31,28 @@
 <![endif]-->
 <!--[if !IE]><!--> <body class='cool'> <!--<![endif]-->
 
-	<section id='video-player'>
-        <div class="no-params">
-            <p>You have to specify a video_id param in the URL query string in order to load a video</p>
-            <p>like so: <a href="?video_id=1Kvl31g77Z8">{{url}}?video_id=1Kvl31g77Z8</a></p>
-        </div>
-        <div class='no-js'>
-        	<p>Sorry, this page cannot be accessed without Javascript. Please, turn on Javascript support in your browser first</p>
-        </div>
+
+	<header class='logo'>
+		<!-- moshi tv logo -->
+		<a class='logo structure' href='#'>Moshi TV</a>
+	</header>
+
+	<section id='content'>
+		<div class='tv-content'>
+	        <div class="no-params">
+	            <p>You have to specify a video_id param in the URL query string in order to load a video</p>
+	            <p>like so: <a href="?video_id=1Kvl31g77Z8">{{url}}?video_id=1Kvl31g77Z8</a></p>
+	        </div>
+	        <div class='no-js'>
+	        	<p>Sorry, this page cannot be accessed without Javascript. Please, turn on Javascript support in your browser first</p>
+	        </div>
+	    </div>
+	    <footer></footer>
 	</section>
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-<!--<script src="js/lib/date.js"></script>-->
+<script src="js/lib/moment.min.js"></script>
 <script src="js/lib/tash-0.0.1.js"></script>
 <script src="js/lib/mindcandy.util.js"></script>
 <script src="js/lib/mindcandy.player.js"></script>
