@@ -1,0 +1,71 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3/border-radius";
+
+$video-width: 640px;
+$video-height: 350px;
+$common-font: Arial, sans-serif;
+$main-bg: #eee;
+
+@mixin style-message {
+	font-family: $common-font;
+	font-size: 12px;
+	text-align: center;
+	line-height: 1.2em;
+
+	background-color: darken($main-bg, 30);
+	color: white;
+	padding: 10px;
+	@include border-radius(6px);
+}
+
+body {
+	font-family: $common-font;
+	font-size: 16px;
+
+	a, a:visited, a:active {
+		color: #333;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+section#player-container {
+	width: $video-width;
+
+	margin: 20px auto;
+
+	.no-params {
+		@include style-message;
+		display: none;
+	}
+
+	.no-js {
+		@include style-message;
+	}
+
+	div.player {
+		width: $video-width;
+		height: $video-height;
+	}
+
+	.additional-info {
+		overflow: hidden;
+
+		span {
+			float:left;
+
+			&.view-count {
+				float:right;
+			}
+		}
+
+	}
+}
