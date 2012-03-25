@@ -67,29 +67,34 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 26, ../../sass/screen.scss */
+/* line 27, ../../sass/screen.scss */
 body {
   font-family: Arial, sans-serif;
   font-size: 16px;
 }
-/* line 30, ../../sass/screen.scss */
+/* line 31, ../../sass/screen.scss */
 body a, body a:visited, body a:active {
   color: #333;
   text-decoration: none;
 }
-/* line 34, ../../sass/screen.scss */
+/* line 35, ../../sass/screen.scss */
 body a:hover, body a:visited:hover, body a:active:hover {
   text-decoration: underline;
 }
 
-/* line 40, ../../sass/screen.scss */
-section#player-container {
-  width: 640px;
-  height: 350px;
+/* line 41, ../../sass/screen.scss */
+#video-player {
+  width: 900px;
   margin: 20px auto;
+  overflow: hidden;
 }
-/* line 46, ../../sass/screen.scss */
-section#player-container .no-params {
+
+/* line 47, ../../sass/screen.scss */
+#player-container {
+  float: left;
+}
+/* line 51, ../../sass/screen.scss */
+#player-container .no-params {
   font-family: Arial, sans-serif;
   font-size: 12px;
   text-align: center;
@@ -105,8 +110,8 @@ section#player-container .no-params {
   border-radius: 6px;
   display: none;
 }
-/* line 51, ../../sass/screen.scss */
-section#player-container .no-js {
+/* line 56, ../../sass/screen.scss */
+#player-container .no-js {
   font-family: Arial, sans-serif;
   font-size: 12px;
   text-align: center;
@@ -121,20 +126,30 @@ section#player-container .no-js {
   -khtml-border-radius: 6px;
   border-radius: 6px;
 }
-/* line 55, ../../sass/screen.scss */
-section#player-container div.player {
-  width: 640px;
+/* line 60, ../../sass/screen.scss */
+#player-container .player-wrapper {
+  width: 550px;
+}
+/* line 64, ../../sass/screen.scss */
+#player-container div.player {
+  width: 550px;
   height: 350px;
 }
-/* line 60, ../../sass/screen.scss */
-section#player-container .additional-info {
+/* line 69, ../../sass/screen.scss */
+#player-container .additional-info {
   overflow: hidden;
 }
-/* line 63, ../../sass/screen.scss */
-section#player-container .additional-info span {
+/* line 72, ../../sass/screen.scss */
+#player-container .additional-info span {
   float: left;
 }
-/* line 66, ../../sass/screen.scss */
-section#player-container .additional-info span.view-count {
+/* line 75, ../../sass/screen.scss */
+#player-container .additional-info span.view-count {
   float: right;
+}
+
+/* line 83, ../../sass/screen.scss */
+#related-container {
+  float: right;
+  width: 320px;
 }

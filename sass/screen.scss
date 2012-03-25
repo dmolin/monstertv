@@ -6,7 +6,8 @@
 @import "compass/reset";
 @import "compass/css3/border-radius";
 
-$video-width: 640px;
+$video-player-width: 900px;
+$video-width: 550px;
 $video-height: 350px;
 $common-font: Arial, sans-serif;
 $main-bg: #eee;
@@ -37,10 +38,15 @@ body {
 	}
 }
 
-section#player-container {
-	width: $video-width;
-
+#video-player {
+	width: $video-player-width;
 	margin: 20px auto;
+	overflow: hidden;
+}
+
+#player-container {
+
+	float: left;
 
 	.no-params {
 		@include style-message;
@@ -49,6 +55,10 @@ section#player-container {
 
 	.no-js {
 		@include style-message;
+	}
+
+	.player-wrapper {
+		width: $video-width;
 	}
 
 	div.player {
@@ -68,4 +78,9 @@ section#player-container {
 		}
 
 	}
+}
+
+#related-container {
+	float: right;
+	width: $video-player-width - $video-width - 30px;
 }

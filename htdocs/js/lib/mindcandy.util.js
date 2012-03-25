@@ -30,6 +30,8 @@ mindcandy.util.Time = {
 			SECS_IN_HOUR = 60 * 60,
 			SECS_IN_MIN = 60;
 
+		secs = parseInt( secs, 10 );
+
 		outcome.hh = Math.floor(secs / SECS_IN_HOUR);
 		outcome.mm = Math.floor( (secs % SECS_IN_HOUR) / SECS_IN_MIN );
 		outcome.ss = Math.ceil( (secs % SECS_IN_HOUR) % SECS_IN_MIN );

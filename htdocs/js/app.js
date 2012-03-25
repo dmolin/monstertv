@@ -17,15 +17,20 @@ $(document).ready( function(){
 		videoId = idmatch && idmatch.length > 1 ? idmatch[1] : '',
 		player;
 
+	//since Javascript is enabled, let's hide this message
 	$( '.no-js').hide();
 
+	//if no video_id is provided, tell the user how to use this page...
 	if( !videoId ) {
 		$('.no-params').html( mindcandy.util.template( $('.no-params').html(), { url: document.location.href } ) );
 		$('.no-params' ).fadeIn();
 	}
 
 	try {
-		player = mindcandy.Player.create( { containerSelector:'#player-container', videoId:videoId } );
+		//create a player
+		player = mindcandy.Player.create( {
+			containerSelector:'#player-container',
+			relatedSelector:'#related-container', videoId:videoId } );
 	} catch( error ) {
 		console.log( error );
 	}

@@ -28,10 +28,20 @@ mindcandy.Player = (function(){
 			*--------------------------------*/
 
 			function getVideoMeta() {
-				//step 1. inject script tag
-				$(document.body).append( '<script src="https://gdata.youtube.com/feeds/api/videos/' +
-					cfg.videoId +
-					'?v=2&alt=json-in-script&callback=' + 'mindcandy.Player.all[' + id + '].info'  + '"></script>' );
+				var info = document.createElement( 'script' );
+				$(info).attr('src', 'https://gdata.youtube.com/feeds/api/videos/' +
+							cfg.videoId +
+							'?v=2&alt=json-in-script&callback=' + 'mindcandy.Player.all[' + id + ']._api.onInfo' );
+				$(document.body).append( info );
+			}
+
+			function getRelatedVideos() {
+				var rel = document.createElement('script');
+				$(rel).attr('src',
+							'https://gdata.youtube.com/feeds/api/videos/' +
+							cfg.videoId +
+							'/related?v=2&alt=json-in-script&callback=mindcandy.Player.all[' + id + ']._api.onRelated' );
+				$(document.body).append( rel );
 			}
 
 
@@ -49,11 +59,16 @@ mindcandy.Player = (function(){
 
 			function _onReady() {
 				el = $('#' + _getPlayerMarkupId(), cfg.containerSelector );
-				console.log( el.get(0).getDuration() );
+				//get the data describing this video
 				getVideoMeta();
+
+				//get the information for the related content
+				if( cfg.relatedSelector ) {
+					getRelatedVideos();
+				}
 			}
 
-			function _info( data ) {
+			function _onInfo( data ) {
 				console.log( data.entry );
 				meta = data.entry;
 
@@ -67,6 +82,30 @@ mindcandy.Player = (function(){
 						length: mindcandy.util.Time.fromValue( el.get(0).getDuration() ),
 						viewCount: meta.yt$statistics.viewCount
 					} ) );
+			}
+
+			/**
+			* This function gets called when the feed for related video is ready
+			*/
+			function _onRelated( data ){
+				console.log( data.feed );
+
+				var feed, idx; //used in the for loop. declaring here for coherency with hoisting behavior
+
+				$(cfg.relatedSelector).empty();
+
+				//for each entry, generate the markup for the related video
+				for( idx in data.feed.entry ) {
+					if( data.feed.entry.hasOwnProperty( idx ) ) {
+						feed = data.feed.entry[idx];
+						console.log( "adding " + feed.title.$t );
+						$(cfg.relatedSelector).append(
+							mindcandy.util.template( mindcandy.Player.templates.related, {
+								title: feed.title.$t
+							} ) );
+
+					}
+				}
 			}
 
 			/*--------------------------------
@@ -101,7 +140,12 @@ mindcandy.Player = (function(){
 				getPlayerId: _getPlayerId,
 				getPlayerMarkupId: _getPlayerMarkupId,
 				onReady: _onReady,
-				info: _info
+				//I have to expose this functions because of the way
+				//the Youtube API works with global callbacks
+				_api: {
+					onInfo: _onInfo,
+					onRelated: _onRelated
+				}
 			};
 
 			return players[id];
@@ -137,5 +181,11 @@ mindcandy.Player.templates = {
 		"<div class='published-on'><span>Published on {{publishDate}} by <em>{{publishUser}}</em></span></div>",
 		"<div class='additional-info'><span>total length: {{length}}</span><span class='view-count'>{{viewCount}}</span></div>",
 		"<p class='description'>{{description}}</p>"
+	].join(''),
+
+	related: [
+		"<article class='related-video'>",
+			"<h1>{{title}}</h1>",
+		"</article>"
 	].join('')
 };
